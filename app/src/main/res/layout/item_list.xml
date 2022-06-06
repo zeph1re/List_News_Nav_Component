@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView android:layout_margin="20dp"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="5dp"
+    android:id="@+id/cardNews"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/image_news"
+            android:src="@drawable/ic_launcher_background"
+            android:layout_centerHorizontal="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_judul"
+            android:text="ini judul"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:layout_below="@+id/image_news"
+            android:layout_marginBottom="5dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_tanggal_rilis"
+            android:text="Ini tanggal"
+            android:textSize="10sp"
+            android:layout_below="@id/tv_judul"
+            android:layout_marginBottom="5dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_penulis"
+            android:text="ini penulis"
+            android:textSize="13sp"
+            android:textStyle="italic"
+            android:layout_below="@id/tv_tanggal_rilis"/>
+
+    </RelativeLayout>
+
+
+
+
+
+
+</androidx.cardview.widget.CardView>
