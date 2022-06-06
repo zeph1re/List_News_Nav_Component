@@ -1,11 +1,13 @@
 package binar.ganda.list_news_nav_component
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import binar.ganda.list_news_nav_component.model.ResponseUserItem
 import binar.ganda.list_news_nav_component.network.ApiClient
@@ -16,6 +18,9 @@ import retrofit2.Response
 
 class LoginFragment : Fragment() {
 
+    lateinit var sharedPreferences : SharedPreferences
+    private var isRemembered = false
+    lateinit var listUser : List<ResponseUserItem>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,16 +33,26 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        sharedPreferences = requireActivity().getSharedPreferences("pref", Context.MODE_PRIVATE)
+
+        isRemembered = sharedPreferences.getBoolean("CHECKBOX", false)
+
+        if (isRemembered){
+            Navigation.findNavController(requireView()).navigate(R.id.action_loginFragment_to_homeFragment)
+        }
+
         btnLogin.setOnClickListener{
-            if  (loginEmail.text.isNotEmpty() && loginPassword.text.isNotEmpty()){
-                val email = loginEmail.text.toString()
+            if  (loginUsername.text.isNotEmpty() && loginPassword.text.isNotEmpty()){
+                val username = loginUsername.text.toString()
                 val password = loginPassword.text.toString()
-
-                login(email, password)
-
+                login(username, password)
             } else {
                 Toast.makeText(requireContext(),"Field Email dan Password harus diisi", Toast.LENGTH_LONG).show()
             }
+        }
+
+        daftar.setOnClickListener{
+            Navigation.findNavController(requireView()).navigate(R.id.action_loginFragment_to_registerFragment)
         }
 
 
@@ -65,6 +80,9 @@ class LoginFragment : Fragment() {
                                     Toast.makeText(requireContext(), "Password tidak terdaftar", Toast.LENGTH_SHORT).show()
                                 }
                                 else -> {
+                                    response.body()?.let { it ->
+                                        detailUser(it)
+                                    }!!
                                     Navigation.findNavController(requireView()).navigate(R.id.action_loginFragment_to_homeFragment)
                                 }
                             }
@@ -77,5 +95,21 @@ class LoginFragment : Fragment() {
                 }
 
             })
+    }
+
+    fun detailUser(listLogin : List<ResponseUserItem>){
+        for (i in listLogin.indices){
+            val checked = checkbox.isChecked
+            val editor = sharedPreferences.edit()
+            editor.putString("NAME", listLogin[i].name)
+            editor.putString("ADDRESS", listLogin[i].address)
+            editor.putString("UMUR", listLogin[i].umur.toString())
+            editor.putString("IMAGE", listLogin[i].umur.toString())
+            editor.putString("ID", listLogin[i].id)
+            editor.putString("USERNAME", listLogin[i].username)
+            editor.putString("PASSWORD", listLogin[i].password)
+            editor.putBoolean("CHECKBOX", checked)
+            editor.apply()
+        }
     }
 }

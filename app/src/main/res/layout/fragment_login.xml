@@ -18,8 +18,8 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/loginEmail"
-        android:hint="Email"
+        android:id="@+id/loginUsername"
+        android:hint="Username"
         android:layout_marginHorizontal="50dp"
         android:layout_marginBottom="10dp"/>
 
@@ -28,6 +28,13 @@
         android:layout_height="wrap_content"
         android:id="@+id/loginPassword"
         android:hint="Password"
+        android:layout_marginHorizontal="50dp"/>
+
+    <CheckBox
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/checkbox"
+        android:text="Remember me"
         android:layout_marginHorizontal="50dp"
         android:layout_marginBottom="30dp"/>
 
@@ -43,7 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/daftar"
-        android:text="Daftar"/>
+        android:text="Daftar di Sini!!!"/>
 
 
 
