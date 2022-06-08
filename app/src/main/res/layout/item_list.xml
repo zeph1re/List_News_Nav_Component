@@ -48,6 +48,8 @@
             android:textStyle="italic"
             android:layout_below="@id/tv_tanggal_rilis"/>
 
+
+
     </RelativeLayout>
 
 

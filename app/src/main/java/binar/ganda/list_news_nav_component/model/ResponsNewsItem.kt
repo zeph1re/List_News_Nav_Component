@@ -20,4 +20,4 @@ data class ResponsNewsItem(
     val image: String,
     @SerializedName("title")
     val title: String
-) : Parcelable
+) :Parcelable

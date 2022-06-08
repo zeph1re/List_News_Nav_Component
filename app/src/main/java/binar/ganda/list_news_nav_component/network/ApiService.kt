@@ -2,11 +2,9 @@ package binar.ganda.list_news_nav_component.network
 
 import binar.ganda.list_news_nav_component.model.ResponsNewsItem
 import binar.ganda.list_news_nav_component.model.ResponseUserItem
+import binar.ganda.list_news_nav_component.model.ResponseUserPost
 import retrofit2.Call
-import retrofit2.http.Field
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface ApiService {
 
@@ -20,8 +18,6 @@ interface ApiService {
 
     @POST("user")
     fun registerUser(
-        @Field("name") name: String,
-        @Field("username") username: String,
-        @Field("password") password: String,
+        @Body user: ResponseUserPost
     ) : Call<ResponseUserItem>
 }

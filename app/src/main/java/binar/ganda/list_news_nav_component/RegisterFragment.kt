@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.Navigation
 import binar.ganda.list_news_nav_component.model.ResponseUserItem
+import binar.ganda.list_news_nav_component.model.ResponseUserPost
 import binar.ganda.list_news_nav_component.network.ApiClient
 import kotlinx.android.synthetic.main.fragment_register.*
 import retrofit2.Call
@@ -38,7 +39,7 @@ class RegisterFragment : Fragment() {
             if  (name.isNotEmpty() && username.isNotEmpty() &&
                 password.isNotEmpty() && confirmPassword.isNotEmpty()){
                 if (password == confirmPassword){
-                    register(name,username,password)
+                    postDataNewUser(name,username,password)
                 } else {
                     Toast.makeText(requireContext(), "Password dan Confirm Password harus sama", Toast.LENGTH_SHORT).show()
                 }
@@ -50,30 +51,37 @@ class RegisterFragment : Fragment() {
 
     }
 
-    fun register(
+    private fun postDataNewUser(
         name : String,
         username : String,
-        password : String
+        password : String,
     ) {
-        ApiClient.INSTANCE.registerUser(name, username, password)
+        val user = ResponseUserPost("", "http://placeimg.com/640/480/city", name, password, 0, username)
+        ApiClient.INSTANCE.registerUser(user)
             .enqueue(object : Callback<ResponseUserItem> {
                 override fun onResponse(
                     call: Call<ResponseUserItem>,
                     response: Response<ResponseUserItem>
                 ) {
-                    if(response.isSuccessful){
-                        Toast.makeText(requireContext(), response.message(), Toast.LENGTH_LONG).show()
-                        Navigation.findNavController(requireView()).navigate(R.id.action_registerFragment_to_loginFragment)
-                    } else {
-                        Toast.makeText(requireContext(), response.message(), Toast.LENGTH_LONG).show()
-                    }
-                }
+                            if(response.isSuccessful){
+                                Toast.makeText(requireContext(), "Registrasi Berhasil", Toast.LENGTH_LONG).show()
+                                Navigation.findNavController(requireView()).navigate(R.id.action_registerFragment_to_loginFragment)
+                            } else {
+                                Toast.makeText(requireContext(), response.message(), Toast.LENGTH_LONG).show()
+                            }
+                        }
 
-                override fun onFailure(call: Call<ResponseUserItem>, t: Throwable) {
-                    Toast.makeText(requireContext(), t.message, Toast.LENGTH_LONG).show()
-                }
-            })
+                        override fun onFailure(call: Call<ResponseUserItem>, t: Throwable) {
+                            Toast.makeText(requireContext(), t.message, Toast.LENGTH_LONG).show()
+                        }
+                    })
+
     }
 
-
 }
+
+
+
+
+
+

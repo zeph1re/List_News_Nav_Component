@@ -1,5 +1,8 @@
 package binar.ganda.list_news_nav_component
 
+import android.annotation.SuppressLint
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,6 +23,7 @@ import retrofit2.Response
 class HomeFragment : Fragment() {
 
     private lateinit var newsAdapter : NewsAdapter
+    private lateinit var sharedPreferences : SharedPreferences
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,7 +35,14 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        sharedPreferences = requireActivity().getSharedPreferences("pref", Context.MODE_PRIVATE)
+
         getNews()
+
+        logout()
+
+
     }
 
         private fun getNews() {
@@ -62,6 +73,16 @@ class HomeFragment : Fragment() {
                 }
 
             })
+    }
+
+    @SuppressLint("CommitPrefEdits")
+    private fun logout(){
+        logout_btn.setOnClickListener{
+            val editor = sharedPreferences.edit()
+            editor.clear()
+            editor.apply()
+            Navigation.findNavController(requireView()).navigate(R.id.action_homeFragment_to_loginFragment)
+        }
     }
 }
 

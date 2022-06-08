@@ -18,9 +18,8 @@ import retrofit2.Response
 
 class LoginFragment : Fragment() {
 
-    lateinit var sharedPreferences : SharedPreferences
+    private lateinit var sharedPreferences : SharedPreferences
     private var isRemembered = false
-    lateinit var listUser : List<ResponseUserItem>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,7 +57,7 @@ class LoginFragment : Fragment() {
 
     }
 
-    fun login(username : String, password : String){
+    private fun login(username : String, password : String){
         ApiClient.INSTANCE.getAllUser(username)
             .enqueue(object : retrofit2.Callback<List<ResponseUserItem>>{
                 override fun onResponse(
